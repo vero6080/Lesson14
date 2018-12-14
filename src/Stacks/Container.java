@@ -14,13 +14,13 @@ public class Container {
         this.name = name;
     }
     
-    public void unbook(String name) {
+    public void unbook() {
         this.name = "Unassigned";
     }
 
     @Override
     public String toString() {
-        return "Container{" + "id=" + id + ", name=" + name + '}';
+        return "ID: " + id + " | Borrower: " + name;
     }
     
 }

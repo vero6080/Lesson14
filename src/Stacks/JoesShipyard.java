@@ -1,12 +1,17 @@
 package Stacks;
 
+import java.util.ArrayList;
 import java.util.Stack;
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class JoesShipyard extends javax.swing.JFrame {
-    
+
     JLabel containers[] = new JLabel[10];
-    Stack <Container> yard = new Stack();
+    Stack<Container> yard = new Stack();
+    ArrayList<Container> out = new ArrayList();
+    DefaultListModel outdata;
 
     public JoesShipyard() {
         initComponents();
@@ -20,11 +25,14 @@ public class JoesShipyard extends javax.swing.JFrame {
         containers[7] = lblcontain7;
         containers[8] = lblcontain8;
         containers[9] = lblcontain9;
-        
+
         for (JLabel c : containers) {
             yard.push(new Container());
             c.setText(yard.peek().toString());
         }
+
+        outdata = new DefaultListModel();
+        outlist.setModel(outdata);
     }
 
     @SuppressWarnings("unchecked")
@@ -47,7 +55,7 @@ public class JoesShipyard extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         outlist = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
+        btnreturn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -179,6 +187,11 @@ public class JoesShipyard extends javax.swing.JFrame {
         );
 
         btnbook.setText("Book It");
+        btnbook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbookActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -201,7 +214,12 @@ public class JoesShipyard extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton1.setText("Return Selected Container");
+        btnreturn.setText("Return Selected Container");
+        btnreturn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnreturnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -217,8 +235,8 @@ public class JoesShipyard extends javax.swing.JFrame {
                         .addComponent(txtname)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE))
+                    .addComponent(btnreturn, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -232,12 +250,51 @@ public class JoesShipyard extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnbook)
                     .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnreturn))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnbookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbookActionPerformed
+        try {
+            Container temp = yard.pop();
+            if (txtname.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Please enter a name");
+                return;
+            } else {
+                temp.book(txtname.getText());
+                out.add(temp);
+                outdata.addElement(temp);
+                containers[yard.size()].setVisible(false);
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "There are no more containers available");
+        }
+        //txtname.setText("");
+    }//GEN-LAST:event_btnbookActionPerformed
+
+    //fix this one
+    private void btnreturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnreturnActionPerformed
+        if (outdata.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "There are no more containers to be returned");
+            return;
+        } else {
+            try {
+                int index = outdata.indexOf(outlist.getSelectedValue());
+                Container temp = yard.push((Container)outdata.getElementAt(index));
+                temp.unbook();
+                out.remove(index);
+                outdata.remove(index);
+                containers[yard.size()].setVisible(true);
+                containers[yard.size()].setText(yard.peek().toString());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Please select a container");
+            }
+        }
+    }//GEN-LAST:event_btnreturnActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -273,7 +330,7 @@ public class JoesShipyard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnbook;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnreturn;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

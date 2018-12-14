@@ -35,8 +35,8 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btnreturn" pref="218" max="32767" attributes="0"/>
                   <Component id="jPanel2" max="32767" attributes="0"/>
-                  <Component id="jButton1" pref="258" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -54,7 +54,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnbook" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtname" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnreturn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -357,6 +357,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Book It"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnbookActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtname">
     </Component>
@@ -411,10 +414,13 @@
         </Container>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btnreturn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Return Selected Container"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnreturnActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
