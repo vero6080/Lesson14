@@ -282,17 +282,20 @@ public class JoesShipyard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "There are no more containers to be returned");
             return;
         } else {
-            try {
                 int index = outdata.indexOf(outlist.getSelectedValue());
-                Container temp = yard.push((Container)outdata.getElementAt(index));
-                temp.unbook();
-                out.remove(index);
+                Container temp = yard.push(out.remove(index));
                 outdata.remove(index);
-                containers[yard.size()].setVisible(true);
+                temp.unbook();
+                containers[yard.size()-1].setVisible(true);
                 containers[yard.size()].setText(yard.peek().toString());
-            } catch (Exception e) {
+                
+            /*
+            try {
+            //code
+            } catch (ArrayIndexOutOfBoundsException e) {
                 JOptionPane.showMessageDialog(this, "Please select a container");
             }
+            */
         }
     }//GEN-LAST:event_btnreturnActionPerformed
 
