@@ -118,7 +118,6 @@ public class ERScheduler extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    //allows empty name to be entered
     private void btnscheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnscheduleActionPerformed
         int level;
         if (rad1.isSelected()) {
@@ -131,20 +130,19 @@ public class ERScheduler extends javax.swing.JFrame {
             level = -1;
         }
 
-        if (txtname.equals("") || level == -1) {
+        if (txtname.getText().equals("") || level == -1) {
             JOptionPane.showMessageDialog(this, "Please fill out the form");
-            return;
-        }
+        } else {
+            Patient temp = new Patient(txtname.getText(), level);
+            try {
+                Thread.sleep(100);
+            } catch (Exception e) {
+            }
 
-        Patient temp = new Patient(txtname.getText(), level);
-        try {
-            Thread.sleep(100);
-        } catch (Exception e) {
+            lineup.add(temp);
+            txtoutput.append(temp + "\n");
+            txtname.setText("");
         }
-
-        lineup.add(temp);
-        txtoutput.append(temp + "\n");
-        txtname.setText("");
     }//GEN-LAST:event_btnscheduleActionPerformed
 
     private void btnnextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnextActionPerformed
@@ -158,11 +156,10 @@ public class ERScheduler extends javax.swing.JFrame {
     private void btnallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnallActionPerformed
         if (lineup.isEmpty()) {
             JOptionPane.showMessageDialog(this, "There are no patients to treat");
-        }
-        else {
+        } else {
             while (!lineup.isEmpty()) {
-            txtoutput.append(lineup.remove().getName() + " has been treated\n");
-        }
+                txtoutput.append(lineup.remove().getName() + " has been treated\n");
+            }
         }
     }//GEN-LAST:event_btnallActionPerformed
 

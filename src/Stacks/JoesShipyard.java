@@ -259,11 +259,10 @@ public class JoesShipyard extends javax.swing.JFrame {
 
     private void btnbookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbookActionPerformed
         try {
-            Container temp = yard.pop();
             if (txtname.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Please enter a name");
-                return;
             } else {
+                Container temp = yard.pop();
                 temp.book(txtname.getText());
                 out.add(temp);
                 outdata.addElement(temp);
@@ -273,29 +272,23 @@ public class JoesShipyard extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "There are no more containers available");
         }
-        //txtname.setText("");
+        txtname.setText("");
     }//GEN-LAST:event_btnbookActionPerformed
 
-    //fix this one
     private void btnreturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnreturnActionPerformed
         if (outdata.isEmpty()) {
             JOptionPane.showMessageDialog(this, "There are no more containers to be returned");
-            return;
         } else {
+            try {
                 int index = outdata.indexOf(outlist.getSelectedValue());
                 Container temp = yard.push(out.remove(index));
                 outdata.remove(index);
                 temp.unbook();
-                containers[yard.size()-1].setVisible(true);
-                containers[yard.size()].setText(yard.peek().toString());
-                
-            /*
-            try {
-            //code
+                containers[yard.size() - 1].setVisible(true);
+                containers[yard.size() - 1].setText(yard.peek().toString());
             } catch (ArrayIndexOutOfBoundsException e) {
                 JOptionPane.showMessageDialog(this, "Please select a container");
             }
-            */
         }
     }//GEN-LAST:event_btnreturnActionPerformed
 
